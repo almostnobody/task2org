@@ -791,7 +791,7 @@ class OrgTask(Task):
 @click.option("--orgdir", required=True, help="directory with org files")
 @click.option("-w", "--showwaiting", is_flag=True, help="show waiting status")
 @click.pass_context
-def cli(ctx, orgdir, showwaiting):
+def main(ctx, orgdir, showwaiting):
     statuses = ["pending"]
     if showwaiting:
         statuses.append("waiting")
@@ -847,7 +847,7 @@ def cli(ctx, orgdir, showwaiting):
     ctx.obj.orgprojects = orgprojects
 
 
-@cli.command()
+@main.command()
 @click.option("-t", "--test", is_flag=True)
 @click.option("--taskbin" )
 @click.pass_context
@@ -961,4 +961,4 @@ def sync(ctx, test, taskbin):
 
 
 if __name__ == "__main__":
-    sys.exit(cli())
+    sys.exit(main())  # pragma: no cover
