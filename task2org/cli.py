@@ -790,9 +790,8 @@ class OrgTask(Task):
 @click.group()
 @click.option("--orgdir", required=True, help="directory with org files")
 @click.option("-w", "--showwaiting", is_flag=True, help="show waiting status")
-@click.option("--taskbin", default="/bin/task" )
 @click.pass_context
-def main(ctx, orgdir, showwaiting, taskbin):
+def main(ctx, orgdir, showwaiting):
     statuses = ["pending"]
     if showwaiting:
         statuses.append("waiting")
@@ -803,7 +802,7 @@ def main(ctx, orgdir, showwaiting, taskbin):
     # tasks = ctx.obj.w.load_tasks()
 
     tasks = subprocess.getoutput(
-        [taskbin+" status:pending or status:waiting or status:completed export"]
+        ["task status:pending or status:waiting or status:completed export"]
     )
     tasks = json.loads(tasks)
     # pending = tasks["pending"]
@@ -949,7 +948,7 @@ def sync(ctx, test):
         time.sleep(10)
     print("started import")
     sp = subprocess.run(
-        [taskbin, "import"],
+        ["task", "import"],
         # stdin=self.__repr__(),
         input=json.dumps(updatetasks),
         capture_output=True,
